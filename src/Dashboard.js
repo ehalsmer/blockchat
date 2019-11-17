@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -14,8 +14,10 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 // import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
+import Chip from "@material-ui/core/Chip";
 // import FaceIcon from '@material-ui/icons/Face';
+
+import {Context} from "./Store.js"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,6 +50,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Dashboard = () => {
+// Context store
+  const [allMessages] = useContext(Context);
+  console.log('allMessages from Context: ', allMessages)
+
   const [textValue, setTextValue] = useState('')
 //   console.log('textValue: ',textValue)
 
@@ -63,7 +69,7 @@ const Dashboard = () => {
       <div className={classes.flex}>
         <div className={classes.channelsWindow}>
           <List>
-            {["channel1", "channel2", "channel3"].map(channel => 
+            {["general", "channel2", "channel3"].map(channel => 
                 <ListItem key={channel} button>
                     <ListItemText primary={channel} />
                 </ListItem>
@@ -72,7 +78,7 @@ const Dashboard = () => {
         </div>
         <div className={classes.chatWindow}>
             {
-                [{from: "ehalsmer", message: "Hello!"}, {from: "lonavarro", message: "hey, what's up?"}].map((chat, i) =>
+                [{from: "ehalsmer", message: "Hello!", channel: "general"}, {from: "lonavarro", message: "hey, what's up?", channel: "general"}].map((chat, i) =>
                     <div className={classes.flex} key={i}>
                         <Chip size="small" label={chat.from} className={classes.chip}/>
                         <Typography variant='p'>{chat.message}</Typography>
