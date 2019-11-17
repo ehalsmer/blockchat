@@ -1,4 +1,7 @@
 import React, {createContext, useReducer} from 'react';
+import io from 'socket.io-client';
+
+
 
 export const Context = createContext();
 
@@ -36,11 +39,28 @@ const reducer = (state, action) => {
     }
 }
 
-const Store = (props) => {
 
-    const reducerHook = useReducer(reducer, initialState)
+
+// socket declared outside of Store component so it doesn't rerender every time the Store reloads
+let socket;
+
+const sendMessageAction = (value) => {
+    socket.emit('chat message', value)
+}
+const user = 'user' + (Math.random()*100).toFixed(0);
+
+
+const Store = (props) => {
+    if (!socket){
+        console.log('attempting to connect from client')
+        socket = io(':3004');
+    }
+    
+
+    const [allMessages] = useReducer(reducer, initialState)
     return (
-        <Context.Provider value={reducerHook}>
+        // sending {allMessages as an object}
+        <Context.Provider value={{allMessages, sendMessageAction, user}}>
             {props.children}
         </Context.Provider>
     )
