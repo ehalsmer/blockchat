@@ -52,9 +52,9 @@ const useStyles = makeStyles(theme => ({
 const Dashboard = () => {
 // Context store
   const {allMessages, sendMessageAction, user} = useContext(Context);
-  console.log('allMessages from Context: ', allMessages)
+//   console.log('allMessages from Context: ', allMessages)
   const channels = Object.keys(allMessages);
-  console.log('Channels list: ', channels)
+//   console.log('Channels list: ', channels)
 
 // local state
   const [activeChannel, setActiveChannel] = useState(channels[0])
@@ -101,6 +101,7 @@ const Dashboard = () => {
         onChange={e => setTextValue(e.target.value)}
         />
       <Button 
+        type="submit"
         variant="contained" 
         color="primary" 
         className={classes.button}

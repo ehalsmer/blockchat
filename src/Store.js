@@ -52,9 +52,12 @@ const user = 'user' + (Math.random()*100).toFixed(0);
 
 const Store = (props) => {
     if (!socket){
-        console.log('attempting to connect from client')
+        // console.log('attempting to connect from client')
         socket = io(':3004');
     }
+    socket.on('chat message', (message)=>{
+        console.log('message received from server: ', message)
+    })
     
 
     const [allMessages] = useReducer(reducer, initialState)
