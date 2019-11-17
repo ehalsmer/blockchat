@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -9,6 +9,9 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 // import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
@@ -45,6 +48,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Dashboard = () => {
+  const [textValue, setTextValue] = useState('')
+//   console.log('textValue: ',textValue)
+
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
@@ -68,13 +74,25 @@ const Dashboard = () => {
             {
                 [{from: "ehalsmer", message: "Hello!"}, {from: "lonavarro", message: "hey, what's up?"}].map((chat, i) =>
                     <div className={classes.flex} key={i}>
-                        <Chip color="primary" variant="outlined" size="small" label={chat.from} className={classes.chip}/>
+                        <Chip size="small" label={chat.from} className={classes.chip}/>
                         <Typography variant='p'>{chat.message}</Typography>
                     </div>)
             }
         </div>
       </div>
-      <div className={classes.flex}></div>
+      <div className={classes.flex}>
+      <TextField
+        // variant="outlined" 
+        margin="normal" 
+        label="Type message here"
+        className={classes.chatBox}
+        value={textValue}
+        onChange={e => setTextValue(e.target.value)}
+        />
+      <Button variant="contained" color="primary" className={classes.button}>
+        Send
+      </Button>
+      </div>
     </Paper>
   );
 };
