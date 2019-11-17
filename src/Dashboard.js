@@ -53,7 +53,11 @@ const Dashboard = () => {
 // Context store
   const [allMessages] = useContext(Context);
   console.log('allMessages from Context: ', allMessages)
+  const channels = Object.keys(allMessages);
+  console.log('Channels list: ', channels)
 
+// local state
+  const [activeChannel, setActiveChannel] = useState(channels[0])
   const [textValue, setTextValue] = useState('')
 //   console.log('textValue: ',textValue)
 
@@ -64,13 +68,13 @@ const Dashboard = () => {
         Blockchat
       </Typography>
       <Typography variant="h5" component="h5">
-        Topic/Channel
+        {activeChannel}
       </Typography>
       <div className={classes.flex}>
         <div className={classes.channelsWindow}>
           <List>
-            {["general", "channel2", "channel3"].map(channel => 
-                <ListItem key={channel} button>
+            {channels.map(channel => 
+                <ListItem onClick={e => setActiveChannel(e.target.innerText)} key={channel} button>
                     <ListItemText primary={channel} />
                 </ListItem>
             )}
@@ -78,10 +82,10 @@ const Dashboard = () => {
         </div>
         <div className={classes.chatWindow}>
             {
-                [{from: "ehalsmer", message: "Hello!", channel: "general"}, {from: "lonavarro", message: "hey, what's up?", channel: "general"}].map((chat, i) =>
+                allMessages[activeChannel].map((chat, i) =>
                     <div className={classes.flex} key={i}>
                         <Chip size="small" label={chat.from} className={classes.chip}/>
-                        <Typography variant='p'>{chat.message}</Typography>
+                        <Typography variant='body1'>{chat.message}</Typography>
                     </div>)
             }
         </div>
