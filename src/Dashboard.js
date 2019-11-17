@@ -1,12 +1,18 @@
 import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
+
 import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
+
+// import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
+// import FaceIcon from '@material-ui/icons/Face';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,7 +20,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3, 2)
   },
   flex: {
-    display: "flex"
+    display: "flex",
+    alignItems: "center"
   },
   channelsWindow: {
     width: "30%",
@@ -23,13 +30,17 @@ const useStyles = makeStyles(theme => ({
   },
   chatWindow: {
     width: "70%",
-    height: "300px"
+    height: "300px",
+    padding: "20px"
   },
   chatBox: {
     width: "85%"
   },
   chatButton: {
     width: "15%"
+  },
+  chip: {
+    margin: "4px"
   }
 }));
 
@@ -53,7 +64,15 @@ const Dashboard = () => {
             )}
           </List>
         </div>
-        <div className={classes.chatWindow}></div>
+        <div className={classes.chatWindow}>
+            {
+                [{from: "ehalsmer", message: "Hello!"}, {from: "lonavarro", message: "hey, what's up?"}].map((chat, i) =>
+                    <div className={classes.flex} key={i}>
+                        <Chip color="primary" variant="outlined" size="small" label={chat.from} className={classes.chip}/>
+                        <Typography variant='p'>{chat.message}</Typography>
+                    </div>)
+            }
+        </div>
       </div>
       <div className={classes.flex}></div>
     </Paper>
